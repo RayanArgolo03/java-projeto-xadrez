@@ -39,6 +39,7 @@ public class PartidaXadrez {
     //Iniciar Layout
     public void iniciarLayout(){
         tabuleiro.colocarPeca(new Rei(Cor.BRANCO), new Posicao(2,1));
+        tabuleiro.colocarPeca(new Torre(Cor.PRETO), new Posicao(2,1));
     }
 
 }
