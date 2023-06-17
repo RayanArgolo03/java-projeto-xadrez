@@ -71,7 +71,7 @@ public class Tabuleiro {
 
     //Verifica se a posição passada é valida por linha x coluna
     private boolean posicaoValida(int linha, int coluna) {
-        return linha >= 0 && linhas < linha && coluna >= 0 && coluna < colunas;
+        return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
     }
 
     //Verifica se a posição passada é valida por posição linha x coluna

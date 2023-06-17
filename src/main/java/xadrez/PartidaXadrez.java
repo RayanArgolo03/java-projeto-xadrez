@@ -1,6 +1,6 @@
 package xadrez;
 
-import tabuleiro.Posicao;
+
 import tabuleiro.Tabuleiro;
 
 public class PartidaXadrez {
@@ -36,10 +36,13 @@ public class PartidaXadrez {
     }
     
     
+    private void colocarPecaXadrez(char coluna, int linha, PecaXadrez pecaXadrez){
+        tabuleiro.colocarPeca(pecaXadrez, new PosicaoXadrez(coluna, linha).paraPosicaoGenerica());
+    }
+    
     //Iniciar Layout
     public void iniciarLayout(){
-        tabuleiro.colocarPeca(new Rei(Cor.BRANCO), new Posicao(2,1));
-        tabuleiro.colocarPeca(new Torre(Cor.PRETO), new Posicao(2,1));
+        colocarPecaXadrez('b', 6, new Torre(Cor.PRETO));
     }
 
 }
