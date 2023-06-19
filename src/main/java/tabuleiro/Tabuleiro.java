@@ -54,7 +54,7 @@ public class Tabuleiro {
     }
 
     //Coloca peça de xadrez nas peças do tabuleiro
-    public void colocarPeca(PecaXadrez peca, Posicao posicao) {
+    public void colocarPeca(Peca peca, Posicao posicao) {
 
         if (!posicaoValida(posicao)) {
             throw new TabuleiroException("Erro ao colocar peça na posição " + posicao + ": Posição inválida!");
@@ -80,8 +80,25 @@ public class Tabuleiro {
     }
 
     //Verifica se a posição passada não tem peça
-    private boolean temPeca(Posicao posicao) {
+    public boolean temPeca(Posicao posicao) {
         return getPeca(posicao) != null;
     }
+    
+    public Peca removerPeca(Posicao posicao){
+        
+        if (!posicaoValida(posicao)){
+         throw new TabuleiroException("Erro ao remover peça: Posição inválida!");
+        }
+        
+        if (!temPeca(posicao)){
+            throw new TabuleiroException("Erro ao remover peça: Não existe peça nessa posição!");
+        }
+        
+        Peca aux = getPeca(posicao);
+        aux.posicao = null;
+        this.pecas[posicao.getLinha()][posicao.getColuna()] = null;
+        return aux;
+    }
+    
 
 }

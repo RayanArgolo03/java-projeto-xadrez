@@ -1,8 +1,11 @@
 package teste;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import tabuleiro.Peca;
 import tabuleiro.Tabuleiro;
 import xadrez.Cor;
+import xadrez.PosicaoXadrez;
 
 public class UITabuleiro {
 
@@ -23,10 +26,24 @@ public class UITabuleiro {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-    
-    
 
-    public void imprimirTabuleiro(Tabuleiro tabuleiro) {
+    public static PosicaoXadrez lerPosicao(Scanner sc) {
+
+        try {
+            String jogada = sc.next();
+            
+            char coluna = jogada.charAt(0);
+            int linha = Integer.parseInt(jogada.substring(1));
+            
+            return new PosicaoXadrez(coluna, linha);
+        
+        } catch (RuntimeException e) {
+            throw new InputMismatchException("Erro ao ler posição de xadrez: Valores válidos de a1 a h8!");
+        }
+
+    }
+
+    public static void imprimirTabuleiro(Tabuleiro tabuleiro) {
 
         for (int i = 0; i < tabuleiro.getLinhas(); i++) {
 
@@ -43,7 +60,7 @@ public class UITabuleiro {
         System.out.print("  a b c d e f g h");
     }
 
-    public void imprimirPeca(Peca peca) {
+    public static void imprimirPeca(Peca peca) {
 
         //Se tiver peça imprime, senão, imprime "-"
         if (peca == null) {
