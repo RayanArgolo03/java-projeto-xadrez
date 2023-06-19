@@ -42,6 +42,7 @@ public class PartidaXadrez {
     public void iniciarLayout() {
         colocarPecaXadrez('b', 6, new Torre(Cor.PRETO));
         colocarPecaXadrez('b', 5, new Rei(Cor.BRANCO));
+        colocarPecaXadrez('b', 4, new Rei(Cor.BRANCO));
     }
 
     private void posicaoInicioValida(Posicao px1) {

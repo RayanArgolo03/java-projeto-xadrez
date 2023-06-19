@@ -9,6 +9,12 @@ import xadrez.PosicaoXadrez;
 
 public class UITabuleiro {
 
+    public static void clearScreen() {
+        String sc = new Scanner(System.in).nextLine();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -31,20 +37,21 @@ public class UITabuleiro {
 
         try {
             String jogada = sc.next();
-            
+
             char coluna = jogada.charAt(0);
             int linha = Integer.parseInt(jogada.substring(1));
-            
+
             return new PosicaoXadrez(coluna, linha);
-        
+
         } catch (RuntimeException e) {
             throw new InputMismatchException("Erro ao ler posição de xadrez: Valores válidos de a1 a h8!");
         }
 
     }
 
-    public static void imprimirTabuleiro(Tabuleiro tabuleiro) {
+    public static void imprimirTabuleiro(Tabuleiro tabuleiro) { 
 
+        
         for (int i = 0; i < tabuleiro.getLinhas(); i++) {
 
             System.out.print(8 - i);
@@ -58,6 +65,7 @@ public class UITabuleiro {
         }
 
         System.out.print("  a b c d e f g h");
+        
     }
 
     public static void imprimirPeca(Peca peca) {
