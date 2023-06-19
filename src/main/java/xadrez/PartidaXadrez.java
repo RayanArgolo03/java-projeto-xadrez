@@ -43,6 +43,7 @@ public class PartidaXadrez {
     //Iniciar Layout
     public void iniciarLayout(){
         colocarPecaXadrez('b', 6, new Torre(Cor.PRETO));
+        colocarPecaXadrez('b', 5, new Rei(Cor.BRANCO));
     }
 
 }
