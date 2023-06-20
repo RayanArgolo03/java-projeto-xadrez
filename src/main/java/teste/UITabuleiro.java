@@ -2,8 +2,6 @@ package teste;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import tabuleiro.Peca;
-import tabuleiro.Tabuleiro;
 import xadrez.Cor;
 import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;

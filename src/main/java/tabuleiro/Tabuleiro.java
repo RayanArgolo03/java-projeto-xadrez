@@ -1,7 +1,7 @@
 package tabuleiro;
 
 import tabuleiro.exceptions.TabuleiroException;
-import xadrez.PecaXadrez;
+
 
 public class Tabuleiro {
 
@@ -56,10 +56,6 @@ public class Tabuleiro {
     //Coloca peça de xadrez nas peças do tabuleiro
     public void colocarPeca(Peca peca, Posicao posicao) {
 
-        if (!posicaoValida(posicao)) {
-            throw new TabuleiroException("Erro ao colocar peça na posição " + posicao + ": Posição inválida!");
-        }
-
         if (temPeca(posicao)) {
             throw new TabuleiroException("Erro ao colocar peça na posição " + posicao + ": Posição já ocupada!");
         }
@@ -75,12 +71,18 @@ public class Tabuleiro {
     }
 
     //Verifica se a posição passada é valida por posição linha x coluna
-    private boolean posicaoValida(Posicao posicao) {
+    public boolean posicaoValida(Posicao posicao) {
         return posicaoValida(posicao.getLinha(), posicao.getColuna());
     }
 
     //Verifica se a posição passada não tem peça
     public boolean temPeca(Posicao posicao) {
+        
+        if (!posicaoValida(posicao)) {
+            throw new TabuleiroException("Erro ao colocar peça na posição " + posicao + ": Posição inválida!");
+
+        }
+        
         return getPeca(posicao) != null;
     }
     
@@ -90,8 +92,10 @@ public class Tabuleiro {
          throw new TabuleiroException("Erro ao remover peça: Posição inválida!");
         }
         
-        if (!temPeca(posicao)){
-            throw new TabuleiroException("Erro ao remover peça: Não existe peça nessa posição!");
+        
+        //Caso não tenha peça, anda 
+        if (getPeca(posicao) == null){
+           return null;
         }
         
         Peca aux = getPeca(posicao);

@@ -1,5 +1,6 @@
 package xadrez;
 
+import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 
 public class Torre extends PecaXadrez {
@@ -15,7 +16,75 @@ public class Torre extends PecaXadrez {
 
     @Override
     public boolean[][] movimentosPossiveis() {
+
         boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
+
+        Posicao p = new Posicao(0, 0);
+
+        //Andar para cima
+        p.setValores(posicao.getLinha() - 1, posicao.getColuna());
+
+        while ( getTabuleiro().posicaoValida(p) && !getTabuleiro().temPeca(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+            p.setLinha(p.getLinha() -1 );
+
+        }
+
+        if (getTabuleiro().posicaoValida(p) && temPecaOponente(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+
+        }
+
+        //Para esquerda
+        p.setValores(posicao.getLinha(), posicao.getColuna() - 1);
+
+        while (getTabuleiro().posicaoValida(p) && !getTabuleiro().temPeca(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+            p.setColuna(p.getColuna() - 1);
+
+        }
+
+        if (getTabuleiro().posicaoValida(p) && temPecaOponente(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+
+        }
+
+        //Para direita
+        p.setValores(posicao.getLinha(), posicao.getColuna() + 1);
+
+        while ( getTabuleiro().posicaoValida(p) && !getTabuleiro().temPeca(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+            p.setColuna(p.getColuna() + 1);
+
+        }
+
+        if (getTabuleiro().posicaoValida(p) && temPecaOponente(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+
+        }
+
+        //Para baixo
+        p.setValores(posicao.getLinha() + 1, posicao.getColuna());
+
+        while (getTabuleiro().posicaoValida(p) && !getTabuleiro().temPeca(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+            p.setLinha(p.getLinha() + 1);
+
+        }
+
+        if (getTabuleiro().posicaoValida(p) && temPecaOponente(p)) {
+
+            matriz[p.getLinha()][p.getColuna()] = true;
+
+        }
+
         return matriz;
     }
 

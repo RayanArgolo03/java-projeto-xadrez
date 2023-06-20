@@ -36,8 +36,6 @@ public class Main {
             
             catch (TabuleiroException | InputMismatchException e) {
                 System.out.println(e.getMessage());
-            } finally {
-                sc.close();
             }
         }
 

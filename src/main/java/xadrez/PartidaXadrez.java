@@ -56,6 +56,14 @@ public class PartidaXadrez {
         }
 
     }
+    
+    private void posicaoFinalValida(Posicao px1, Posicao px2) {
+        
+        if (!getTabuleiro().getPeca(px1).movimentoPossivel(px2)){
+            throw new XadrezException("Erro ao executar movimento: A peça escolhida não pode se mover para a posição de destino!");
+        }
+
+    }
 
     private Peca mover(Posicao px1, Posicao px2) {
 
@@ -73,6 +81,7 @@ public class PartidaXadrez {
         Posicao px2 = destino.paraPosicaoGenerica();
         
         posicaoInicioValida(px1);
+        posicaoFinalValida(px1, px2);
         
         Peca pecaCapturada = mover(px1, px2);
         return (PecaXadrez) pecaCapturada;
