@@ -2,23 +2,40 @@ package tabuleiro;
 
 import xadrez.Cor;
 
-public class Peca {
-
-    private Cor cor;
+public abstract class Peca {
+    
     protected Posicao posicao;
-    
-    public Posicao getPosicao() {
-        return posicao;
+    protected Tabuleiro tabuleiro;
+
+    public Peca(Tabuleiro tabuleiro) {
+        this.tabuleiro = tabuleiro;
     }
 
-    public void setPosicao(Posicao posicao) {
-        this.posicao = posicao;
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
     }
 
-    public Cor getCor() {
-        return cor;
+    public abstract boolean[][] movimentosPossiveis();
+
+    public boolean movimentoPossivel(Posicao posicao) {
+
+        return movimentosPossiveis()[posicao.getLinha()][posicao.getColuna()];
+
     }
 
-    
-    
+    public boolean existeMovimentoPossivel() {
+      
+        boolean[][] movimentos = movimentosPossiveis();
+
+        for (int i = 0; i < movimentos.length; i++) {
+            for (int j = 0; j < movimentos[i].length; j++) {
+                
+                if (movimentos[i][j]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

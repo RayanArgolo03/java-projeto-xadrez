@@ -6,7 +6,6 @@ import tabuleiro.exceptions.TabuleiroException;
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
-import xadrez.exception.XadrezException;
 
 public class Main {
 
@@ -15,11 +14,13 @@ public class Main {
         PartidaXadrez px = new PartidaXadrez();
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("        --- XADREZ GAME --- APERTE ENTER PARA COMEÇAR!");
         while (true) {
-            
+
             try {
                 UITabuleiro.clearScreen();
-                UITabuleiro.imprimirTabuleiro(px.getTabuleiro());
+                UITabuleiro.imprimirTabuleiro(px.getPecas());
+
                 System.out.println();
 
                 System.out.print("Posição de origem:");
@@ -30,10 +31,13 @@ public class Main {
                 PosicaoXadrez p1 = UITabuleiro.lerPosicao(sc);
 
                 PecaXadrez pecaCapturada = px.executarMovimento(p, p1);
-            }
+            } 
+            
             
             catch (TabuleiroException | InputMismatchException e) {
                 System.out.println(e.getMessage());
+            } finally {
+                sc.close();
             }
         }
 

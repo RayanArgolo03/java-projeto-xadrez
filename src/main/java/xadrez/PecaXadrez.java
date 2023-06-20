@@ -1,13 +1,14 @@
 package xadrez;
 
 import tabuleiro.Peca;
+import tabuleiro.Tabuleiro;
 
-
-public class PecaXadrez extends Peca {
+public abstract class PecaXadrez extends Peca {
 
     private Cor cor;
 
-    public PecaXadrez(Cor cor) {
+    public PecaXadrez(Cor cor, Tabuleiro tabuleiro) {
+        super(tabuleiro);
         this.cor = cor;
     }
 
@@ -15,8 +16,10 @@ public class PecaXadrez extends Peca {
         return cor;
     }
 
-    public void setCor(Cor cor) {
-        this.cor = cor;
+    
+    
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
     }
 
 }

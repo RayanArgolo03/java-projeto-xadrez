@@ -40,15 +40,19 @@ public class PartidaXadrez {
 
     //Iniciar Layout
     public void iniciarLayout() {
-        colocarPecaXadrez('b', 6, new Torre(Cor.PRETO));
-        colocarPecaXadrez('b', 5, new Rei(Cor.BRANCO));
-        colocarPecaXadrez('b', 4, new Rei(Cor.BRANCO));
+        colocarPecaXadrez('b', 6, new Torre(Cor.PRETO, this.tabuleiro));
+        colocarPecaXadrez('b', 5, new Rei(Cor.BRANCO, this.tabuleiro));
+        colocarPecaXadrez('b', 4, new Rei(Cor.BRANCO, this.tabuleiro));
     }
 
     private void posicaoInicioValida(Posicao px1) {
 
         if (!tabuleiro.temPeca(px1)) {
             throw new XadrezException("Erro ao executar movimento: Não existe peça nessa posição!");
+        }
+        
+        if (!tabuleiro.getPeca(px1).existeMovimentoPossivel()){
+            throw new XadrezException("Erro ao executar movimento: Não existe movimento possível para a peça escolhida!");
         }
 
     }
@@ -67,7 +71,9 @@ public class PartidaXadrez {
 
         Posicao px1 = atual.paraPosicaoGenerica();
         Posicao px2 = destino.paraPosicaoGenerica();
-
+        
+        posicaoInicioValida(px1);
+        
         Peca pecaCapturada = mover(px1, px2);
         return (PecaXadrez) pecaCapturada;
     }

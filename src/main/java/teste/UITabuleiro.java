@@ -5,6 +5,7 @@ import java.util.Scanner;
 import tabuleiro.Peca;
 import tabuleiro.Tabuleiro;
 import xadrez.Cor;
+import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
 
 public class UITabuleiro {
@@ -38,7 +39,7 @@ public class UITabuleiro {
         try {
             String jogada = sc.next();
 
-            char coluna = jogada.charAt(0);
+            char coluna = jogada.toLowerCase().charAt(0);
             int linha = Integer.parseInt(jogada.substring(1));
 
             return new PosicaoXadrez(coluna, linha);
@@ -49,26 +50,25 @@ public class UITabuleiro {
 
     }
 
-    public static void imprimirTabuleiro(Tabuleiro tabuleiro) { 
+    public static void imprimirTabuleiro(PecaXadrez[][] pecas) {
 
-        
-        for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+        for (int i = 0; i < pecas.length; i++) {
 
             System.out.print(8 - i);
             System.out.print(" ");
 
-            for (int j = 0; j < tabuleiro.getColunas(); j++) {
-                imprimirPeca(tabuleiro.getPeca(i, j));
+            for (int j = 0; j < pecas[i].length; j++) {
+                imprimirPeca(pecas[i][j]);
             }
 
             System.out.println();
         }
 
         System.out.print("  a b c d e f g h");
-        
+
     }
 
-    public static void imprimirPeca(Peca peca) {
+    public static void imprimirPeca(PecaXadrez peca) {
 
         //Se tiver peça imprime, senão, imprime "-"
         if (peca == null) {
