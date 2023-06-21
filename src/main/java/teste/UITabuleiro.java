@@ -8,12 +8,13 @@ import xadrez.PosicaoXadrez;
 
 public class UITabuleiro {
 
-    public static void clearScreen() {
-        String sc = new Scanner(System.in).nextLine();
+    public static void limparTela() {
+        System.out.print("--- XADREZ GAME --- ");
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
+    
+    
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -56,7 +57,7 @@ public class UITabuleiro {
             System.out.print(" ");
 
             for (int j = 0; j < pecas[i].length; j++) {
-                imprimirPeca(pecas[i][j]);
+                imprimirPeca(pecas[i][j], false);
             }
 
             System.out.println();
@@ -66,11 +67,33 @@ public class UITabuleiro {
 
     }
 
-    public static void imprimirPeca(PecaXadrez peca) {
+    public static void imprimirTabuleiro(PecaXadrez[][] pecas, boolean[][] movimentosPossiveis) {
+
+        for (int i = 0; i < pecas.length; i++) {
+
+            System.out.print(8 - i);
+            System.out.print(" ");
+
+            for (int j = 0; j < pecas[i].length; j++) {
+                imprimirPeca(pecas[i][j], movimentosPossiveis[i][j]);
+            }
+
+            System.out.println();
+        }
+
+        System.out.print("  a b c d e f g h");
+
+    }
+
+    public static void imprimirPeca(PecaXadrez peca, boolean temFundo) {
 
         //Se tiver peça imprime, senão, imprime "-"
+        if (temFundo) {
+            System.out.print(ANSI_GREEN_BACKGROUND);
+        }
+
         if (peca == null) {
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         } else {
             if (peca.getCor() == Cor.BRANCO) {
                 System.out.print(ANSI_BLUE + peca + ANSI_RESET);

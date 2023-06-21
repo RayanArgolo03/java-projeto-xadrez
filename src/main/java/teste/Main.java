@@ -14,29 +14,29 @@ public class Main {
         PartidaXadrez px = new PartidaXadrez();
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("        --- XADREZ GAME --- APERTE ENTER PARA COMEÇAR!");
-        while (true) {
+        System.out.print("--- XADREZ GAME --- ");
+        try {
+            UITabuleiro.limparTela();
+            UITabuleiro.imprimirTabuleiro(px.getPecas());
 
-            try {
-                UITabuleiro.clearScreen();
-                UITabuleiro.imprimirTabuleiro(px.getPecas());
+            System.out.println();
 
-                System.out.println();
+            System.out.print("Posição de origem:");
+            PosicaoXadrez p = UITabuleiro.lerPosicao(sc);
 
-                System.out.print("Posição de origem:");
-                PosicaoXadrez p = UITabuleiro.lerPosicao(sc);
+            ///Imprimir movimentos possíveis para a peça escolhida
+            boolean[][] movimentosPossiveis = px.movimentosPossiveis(p);
+            UITabuleiro.limparTela();
 
-                System.out.println();
-                System.out.print("Posição de destino: ");
-                PosicaoXadrez p1 = UITabuleiro.lerPosicao(sc);
+            UITabuleiro.imprimirTabuleiro(px.getPecas(), movimentosPossiveis);
 
-                PecaXadrez pecaCapturada = px.executarMovimento(p, p1);
-            } 
-            
-            
-            catch (TabuleiroException | InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
+            System.out.println();
+            System.out.print("Posição de destino: ");
+            PosicaoXadrez p1 = UITabuleiro.lerPosicao(sc);
+
+            PecaXadrez pecaCapturada = px.executarMovimento(p, p1);
+        } catch (TabuleiroException | InputMismatchException e) {
+            System.out.println(e.getMessage());
         }
 
     }

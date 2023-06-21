@@ -50,28 +50,36 @@ public class PartidaXadrez {
         if (!tabuleiro.temPeca(px1)) {
             throw new XadrezException("Erro ao executar movimento: Não existe peça nessa posição!");
         }
-        
-        if (!tabuleiro.getPeca(px1).existeMovimentoPossivel()){
+
+        if (!tabuleiro.getPeca(px1).existeMovimentoPossivel()) {
             throw new XadrezException("Erro ao executar movimento: Não existe movimento possível para a peça escolhida!");
         }
 
     }
-    
+
     private void posicaoFinalValida(Posicao px1, Posicao px2) {
-        
-        if (!getTabuleiro().getPeca(px1).movimentoPossivel(px2)){
+
+        if (!getTabuleiro().getPeca(px1).movimentoPossivel(px2)) {
             throw new XadrezException("Erro ao executar movimento: A peça escolhida não pode se mover para a posição de destino!");
         }
 
+    }
+    
+    public boolean[][] movimentosPossiveis(PosicaoXadrez posicaoXadrez){
+        
+        Posicao posicao = posicaoXadrez.paraPosicaoGenerica();
+        posicaoInicioValida(posicao);
+        
+        return tabuleiro.getPeca(posicao).movimentosPossiveis();
     }
 
     private Peca mover(Posicao px1, Posicao px2) {
 
         Peca p = tabuleiro.removerPeca(px1);
         Peca capturada = tabuleiro.removerPeca(px2);
-        
+
         tabuleiro.colocarPeca(p, px2);
-        
+
         return capturada;
     }
 
@@ -79,10 +87,10 @@ public class PartidaXadrez {
 
         Posicao px1 = atual.paraPosicaoGenerica();
         Posicao px2 = destino.paraPosicaoGenerica();
-        
+
         posicaoInicioValida(px1);
         posicaoFinalValida(px1, px2);
-        
+
         Peca pecaCapturada = mover(px1, px2);
         return (PecaXadrez) pecaCapturada;
     }
