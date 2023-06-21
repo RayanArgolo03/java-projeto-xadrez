@@ -11,11 +11,11 @@ public class PosicaoXadrez {
     public PosicaoXadrez(char coluna, int linha) {
 
         if (coluna < 'a' || coluna > 'h') {
-            throw new XadrezException("Erro ao iniciar posição: Coluna inválida!");
+            throw new XadrezException("Erro ao iniciar coordenadas: Coluna inválida!");
         }
 
         if (linha < 1 || linha > 8) {
-            throw new XadrezException("Erro ao iniciar posição: Linha inválida");
+            throw new XadrezException("Erro ao iniciar coordenadass: Linha inválida");
         }
 
         this.coluna = coluna;
