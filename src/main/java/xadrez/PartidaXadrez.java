@@ -13,6 +13,7 @@ public class PartidaXadrez {
     private Cor jogadorAtual;
     private Tabuleiro tabuleiro;
     private boolean check = false;
+    private boolean checkMate = false;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -39,9 +40,12 @@ public class PartidaXadrez {
 
     public boolean getCheck() {
         return check;
+
     }
-    
-    
+
+    public boolean getCheckMate() {
+        return checkMate;
+    }
 
     //Pegar peças de xadrez pro jogo
     public PecaXadrez[][] getPecas() {
@@ -85,6 +89,40 @@ public class PartidaXadrez {
         throw new IllegalStateException("Erro ao acessar Rei: Não existe o rei da cor " + cor + " no tabuleiro");
     }
 
+    private boolean testeCheckMate(Cor cor) {
+
+        if (!testeCheck(cor)) {
+            return false;
+        }
+
+        List<Peca> pecas = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor().equals(cor)).collect(Collectors.toList());
+
+        for (Peca peca : pecas) {
+
+            boolean matriz[][] = peca.movimentosPossiveis();
+
+            for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+                for (int j = 0; j < tabuleiro.getColunas(); j++) {
+
+                    if (matriz[i][j]) {
+
+                        Posicao origem = ((PecaXadrez) peca).getPosicaoXadrez().paraPosicaoGenerica();
+                        Posicao destino = new Posicao(i, j);
+                        Peca pecaCapturada = mover(origem, destino);
+                        boolean testeCheck = testeCheck(cor);
+                        desfazerMovimento(origem, destino, pecaCapturada);
+
+                        if (!testeCheck) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     private boolean testeCheck(Cor cor) {
 
         Posicao posicaoRei = rei(cor).getPosicaoXadrez().paraPosicaoGenerica();
@@ -102,11 +140,12 @@ public class PartidaXadrez {
 
     //Iniciar Layout
     public void iniciarLayout() {
-        colocarPecaXadrez('b', 6, new Torre(Cor.AZUL, this.tabuleiro));
-        colocarPecaXadrez('e', 2, new Torre(Cor.VERMELHO, this.tabuleiro));
-        colocarPecaXadrez('b', 5, new Rei(Cor.AZUL, this.tabuleiro));
-        colocarPecaXadrez('b', 4, new Rei(Cor.AZUL, this.tabuleiro));
-        colocarPecaXadrez('c', 4, new Rei(Cor.VERMELHO, this.tabuleiro));
+        colocarPecaXadrez('h', 7, new Torre(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('d', 1, new Torre(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('e', 1, new Rei(Cor.AZUL, this.tabuleiro));
+
+        colocarPecaXadrez('b', 8, new Torre(Cor.VERMELHO, this.tabuleiro));
+        colocarPecaXadrez('a', 8, new Rei(Cor.VERMELHO, this.tabuleiro));
     }
 
     private void posicaoInicioValida(Posicao px1) {
@@ -185,16 +224,19 @@ public class PartidaXadrez {
 
         Peca pecaCapturada = mover(origemPosicao, destinoPosicao);
 
-        if (testeCheck(jogadorAtual)){
+        if (testeCheck(jogadorAtual)) {
             desfazerMovimento(origemPosicao, destinoPosicao, pecaCapturada);
             throw new XadrezException("Erro ao mover: Se colocou em Check!");
         }
-        
-        
+
         check = (testeCheck(oponente(jogadorAtual)));
+
+        if (testeCheckMate(oponente(jogadorAtual))) {
+            checkMate = true;
+        } else {
+            proximoTurno();
+        }
         
-        
-        proximoTurno();
         return (PecaXadrez) pecaCapturada;
     }
 

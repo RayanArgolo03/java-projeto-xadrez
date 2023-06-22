@@ -50,16 +50,25 @@ public class UITabuleiro {
     }
 
     public static void imprimirPartida(PartidaXadrez px, List<PecaXadrez> pecasCapturadas) {
+        
         imprimirTabuleiro(px.getPecas());
         System.out.println();
         imprimirPecasCapturadas(pecasCapturadas);
         System.out.println();
         System.out.println("----------");
         System.out.println("Turno: " + px.getTurno());
-        System.out.println("Esperando jogador: " + px.getJogadorAtual());
         
-        if (px.getCheck()){
-            System.out.println("Em cheque! Jogue para sair do cheque");
+        if (!px.getCheckMate()) {
+            System.out.println("Esperando jogador: " + px.getJogadorAtual());
+
+            if (px.getCheck()) {
+                System.out.println("Em cheque! Jogue para sair do cheque");
+            }
+        }
+        
+        else {
+            System.out.println("CHECK MATE!");
+            System.out.println("Vencedor!: " +px.getJogadorAtual());
         }
     }
 
