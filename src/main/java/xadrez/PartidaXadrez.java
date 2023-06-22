@@ -9,6 +9,7 @@ import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrez.exception.XadrezException;
 import xadrez.pecas.Bispo;
+import xadrez.pecas.Cavalo;
 import xadrez.pecas.Peao;
 
 public class PartidaXadrez {
@@ -146,12 +147,12 @@ public class PartidaXadrez {
     public void iniciarLayout() {
 
         colocarPecaXadrez('a', 1, new Torre(Cor.AZUL, this.tabuleiro));
-//        colocarPecaXadrez('b', 1, new Cavalo(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('b', 1, new Cavalo(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('c', 1, new Bispo(Cor.AZUL, this.tabuleiro));
 //        colocarPecaXadrez('d', 1, new Rainha(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('e', 1, new Rei(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('f', 1, new Bispo(Cor.AZUL, this.tabuleiro));
-//        colocarPecaXadrez('g', 1, new Cavalo(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('g', 1, new Cavalo(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('h', 1, new Torre(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('a', 2, new Peao(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('b', 2, new Peao(Cor.AZUL, this.tabuleiro));
@@ -163,12 +164,12 @@ public class PartidaXadrez {
         colocarPecaXadrez('h', 2, new Peao(Cor.AZUL, this.tabuleiro));
 
         colocarPecaXadrez('a', 8, new Torre(Cor.VERMELHO, this.tabuleiro));
-//        colocarPecaXadrez('b', 8, new Cavalo(Cor.VERMELHO, this.tabuleiro));
+        colocarPecaXadrez('b', 8, new Cavalo(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('c', 8, new Bispo(Cor.VERMELHO, this.tabuleiro));
 //        colocarPecaXadrez('d', 8, new Rainha(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('e', 8, new Rei(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('f', 8, new Bispo(Cor.VERMELHO, this.tabuleiro));
-//        colocarPecaXadrez('g', 8, new Cavalo(Cor.VERMELHO, this.tabuleiro));
+        colocarPecaXadrez('g', 8, new Cavalo(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('h', 8, new Torre(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('a', 7, new Peao(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('b', 7, new Peao(Cor.VERMELHO, this.tabuleiro));
