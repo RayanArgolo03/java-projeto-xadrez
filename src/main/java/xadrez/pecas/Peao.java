@@ -26,7 +26,7 @@ public class Peao extends PecaXadrez {
             }
             
             p.setValores(posicao.getLinha() - 2, posicao.getColuna());
-            Posicao p2 = new Posicao(posicao.getLinha() -1, posicao.getColuna());
+            Posicao p2 = new Posicao(posicao.getLinha() - 1, posicao.getColuna());
              
             if (getTabuleiro().posicaoValida(p) && !getTabuleiro().temPeca(p) && getTabuleiro().posicaoValida(p2) && !getTabuleiro().temPeca(p2) && getCountMovimento() == 0){
                 matriz[p.getLinha()][p.getColuna()] = true;
