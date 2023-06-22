@@ -5,6 +5,7 @@ import tabuleiro.exceptions.TabuleiroException;
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
+import xadrez.exception.XadrezException;
 
 public class Main {
 
@@ -40,11 +41,23 @@ public class Main {
                     capturadas.add(pecaCapturada);
                 }
 
-            } catch (TabuleiroException | InputMismatchException e) {
-
-                System.out.println(e.getMessage());
+            }
+            
+            catch (XadrezException e){
+                System.out.println();
+                System.out.print(e.getMessage());
+            }
+            
+            catch (RuntimeException e) {
+                System.out.println();
+                System.out.print(e.getMessage());
 
             }
+            
+            
+            
+            sc.nextLine();
+            sc.nextLine();
         }
 
     }

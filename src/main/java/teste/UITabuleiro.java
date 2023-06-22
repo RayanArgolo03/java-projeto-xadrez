@@ -57,6 +57,10 @@ public class UITabuleiro {
         System.out.println("----------");
         System.out.println("Turno: " + px.getTurno());
         System.out.println("Esperando jogador: " + px.getJogadorAtual());
+        
+        if (px.getCheck()){
+            System.out.println("Em cheque! Jogue para sair do cheque");
+        }
     }
 
     public static void imprimirTabuleiro(PecaXadrez[][] pecas) {

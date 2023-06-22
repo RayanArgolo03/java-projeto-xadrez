@@ -1,6 +1,7 @@
 package xadrez;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
@@ -11,6 +12,7 @@ public class PartidaXadrez {
     private int turno;
     private Cor jogadorAtual;
     private Tabuleiro tabuleiro;
+    private boolean check = false;
 
     private List<Peca> pecasNoTabuleiro = new ArrayList<>();
     private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -35,6 +37,12 @@ public class PartidaXadrez {
         return jogadorAtual;
     }
 
+    public boolean getCheck() {
+        return check;
+    }
+    
+    
+
     //Pegar peças de xadrez pro jogo
     public PecaXadrez[][] getPecas() {
 
@@ -55,11 +63,50 @@ public class PartidaXadrez {
         pecasNoTabuleiro.add(pecaXadrez);
     }
 
+    private Cor oponente(Cor cor) {
+
+        if (cor.equals(Cor.AZUL)) {
+            return Cor.VERMELHO;
+        } else {
+            return Cor.AZUL;
+        }
+    }
+
+    private PecaXadrez rei(Cor cor) {
+
+        List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor().equals(cor)).collect(Collectors.toList());
+
+        for (Peca p : lista) {
+            if (p instanceof Rei) {
+                return (PecaXadrez) p;
+            }
+        }
+
+        throw new IllegalStateException("Erro ao acessar Rei: Não existe o rei da cor " + cor + " no tabuleiro");
+    }
+
+    private boolean testeCheck(Cor cor) {
+
+        Posicao posicaoRei = rei(cor).getPosicaoXadrez().paraPosicaoGenerica();
+        List<Peca> pecasOponentes = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor().equals(oponente(cor))).collect(Collectors.toList());
+
+        for (Peca pecaOponente : pecasOponentes) {
+            boolean[][] matriz = pecaOponente.movimentosPossiveis();
+
+            if (matriz[posicaoRei.getLinha()][posicaoRei.getColuna()]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Iniciar Layout
     public void iniciarLayout() {
-        colocarPecaXadrez('b', 6, new Torre(Cor.VERMELHO, this.tabuleiro));
+        colocarPecaXadrez('b', 6, new Torre(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('e', 2, new Torre(Cor.VERMELHO, this.tabuleiro));
         colocarPecaXadrez('b', 5, new Rei(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('b', 4, new Rei(Cor.AZUL, this.tabuleiro));
+        colocarPecaXadrez('c', 4, new Rei(Cor.VERMELHO, this.tabuleiro));
     }
 
     private void posicaoInicioValida(Posicao px1) {
@@ -101,31 +148,52 @@ public class PartidaXadrez {
         return tabuleiro.getPeca(posicao).movimentosPossiveis();
     }
 
-    private Peca mover(Posicao px1, Posicao px2) {
+    private Peca mover(Posicao origem, Posicao destino) {
 
-        Peca p = tabuleiro.removerPeca(px1);
-        Peca pecaCapturada = tabuleiro.removerPeca(px2);
+        Peca p = tabuleiro.removerPeca(origem);
+        Peca pecaCapturada = tabuleiro.removerPeca(destino);
 
         if (pecaCapturada != null) {
             pecasNoTabuleiro.remove(pecaCapturada);
             pecasCapturadas.add(pecaCapturada);
         }
 
-        tabuleiro.colocarPeca(p, px2);
+        tabuleiro.colocarPeca(p, destino);
 
         return pecaCapturada;
     }
 
-    public PecaXadrez executarMovimento(PosicaoXadrez atual, PosicaoXadrez destino) {
+    private void desfazerMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
 
-        Posicao px1 = atual.paraPosicaoGenerica();
-        Posicao px2 = destino.paraPosicaoGenerica();
+        Peca p = tabuleiro.removerPeca(destino);
+        tabuleiro.colocarPeca(p, origem);
 
-        posicaoInicioValida(px1);
-        posicaoFinalValida(px1, px2);
+        if (pecaCapturada != null) {
+            tabuleiro.colocarPeca(pecaCapturada, destino);
+            pecasCapturadas.remove(pecaCapturada);
+            pecasNoTabuleiro.add(pecaCapturada);
+        }
+    }
 
-        Peca pecaCapturada = mover(px1, px2);
+    public PecaXadrez executarMovimento(PosicaoXadrez origem, PosicaoXadrez destino) {
 
+        Posicao origemPosicao = origem.paraPosicaoGenerica();
+        Posicao destinoPosicao = destino.paraPosicaoGenerica();
+
+        posicaoInicioValida(origemPosicao);
+        posicaoFinalValida(origemPosicao, destinoPosicao);
+
+        Peca pecaCapturada = mover(origemPosicao, destinoPosicao);
+
+        if (testeCheck(jogadorAtual)){
+            desfazerMovimento(origemPosicao, destinoPosicao, pecaCapturada);
+            throw new XadrezException("Erro ao mover: Se colocou em Check!");
+        }
+        
+        
+        check = (testeCheck(oponente(jogadorAtual)));
+        
+        
         proximoTurno();
         return (PecaXadrez) pecaCapturada;
     }
