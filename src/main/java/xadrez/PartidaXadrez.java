@@ -1,5 +1,7 @@
 package xadrez;
 
+import xadrez.pecas.Rei;
+import xadrez.pecas.Torre;
 import java.util.*;
 import java.util.stream.Collectors;
 import tabuleiro.Peca;
@@ -140,6 +142,7 @@ public class PartidaXadrez {
 
     //Iniciar Layout
     public void iniciarLayout() {
+        
         colocarPecaXadrez('h', 7, new Torre(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('d', 1, new Torre(Cor.AZUL, this.tabuleiro));
         colocarPecaXadrez('e', 1, new Rei(Cor.AZUL, this.tabuleiro));

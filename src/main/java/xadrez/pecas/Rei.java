@@ -1,7 +1,9 @@
-package xadrez;
+package xadrez.pecas;
 
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
+import xadrez.Cor;
+import xadrez.PecaXadrez;
 
 public class Rei extends PecaXadrez {
 
