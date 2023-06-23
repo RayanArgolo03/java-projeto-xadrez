@@ -9,7 +9,7 @@ public class Tabuleiro {
     private int linhas;
     private int colunas;
 
-    //As peças do tabuleiro se iniciam com linhas x colunas
+    
     public Tabuleiro(int linhas, int colunas) {
         
         if (linhas < 1){
