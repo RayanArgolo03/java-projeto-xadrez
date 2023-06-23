@@ -11,11 +11,7 @@ public class Torre extends PecaXadrez {
         super(cor, tabuleiro);
     }
 
-    @Override
-    public String toString() {
-        return "T";
-    }
-
+    //Lógica de movimentos da Torre
     @Override
     public boolean[][] movimentosPossiveis() {
 
@@ -88,6 +84,11 @@ public class Torre extends PecaXadrez {
         }
 
         return matriz;
+    }
+    
+    @Override
+    public String toString() {
+        return "T";
     }
 
 }

@@ -1,6 +1,6 @@
-package xadrez.exception;
+package xadrez;
 
-import tabuleiro.exceptions.TabuleiroException;
+import tabuleiro.TabuleiroException;
 
 public class XadrezException extends TabuleiroException {
 

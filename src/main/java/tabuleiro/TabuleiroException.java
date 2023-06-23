@@ -1,4 +1,4 @@
-package tabuleiro.exceptions;
+package tabuleiro;
 
 public class TabuleiroException extends RuntimeException {
 

@@ -14,12 +14,9 @@ public class Rei extends PecaXadrez {
         super(cor, tabuleiro);
         this.partidaXadrez = partidaXadrez;
     }
-
-    @Override
-    public String toString() {
-        return "R";
-    }
-
+    
+    
+    //Verifica se pode mover o Rei
     private boolean podeMover(Posicao posicao) {
 
         PecaXadrez px = (PecaXadrez) tabuleiro.getPeca(posicao);
@@ -27,6 +24,7 @@ public class Rei extends PecaXadrez {
         return px == null || px.getCor() != getCor();
     }
     
+    //Verifica jogada especial Roque
     private boolean podeMovimentoRoque(Posicao posicao){
         
         PecaXadrez p = (PecaXadrez) getTabuleiro().getPeca(posicao);
@@ -34,6 +32,7 @@ public class Rei extends PecaXadrez {
         
     }
 
+    //Lógica de movimentos do Bispo
     @Override
     public boolean[][] movimentosPossiveis() {
 
@@ -119,5 +118,11 @@ public class Rei extends PecaXadrez {
         
         return matriz;
     }
+    
+      @Override
+    public String toString() {
+        return "R";
+    }
+
 
 }

@@ -15,6 +15,7 @@ public class Peao extends PecaXadrez {
         this.partidaXadrez = partidaXadrez;
     }
 
+    //Lógica de movimentos do Peão
     @Override
     public boolean[][] movimentosPossiveis() {
         

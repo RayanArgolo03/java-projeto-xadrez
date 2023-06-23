@@ -1,6 +1,5 @@
 package tabuleiro;
 
-import xadrez.Cor;
 
 public abstract class Peca {
     
@@ -15,6 +14,7 @@ public abstract class Peca {
         return tabuleiro;
     }
 
+    //Implementado por sub classes
     public abstract boolean[][] movimentosPossiveis();
 
     public boolean movimentoPossivel(Posicao posicao) {
@@ -22,7 +22,8 @@ public abstract class Peca {
         return movimentosPossiveis()[posicao.getLinha()][posicao.getColuna()];
 
     }
-
+    
+    //Percorre lista de movimentos para imprimir
     public boolean existeMovimentoPossivel() {
       
         boolean[][] movimentos = movimentosPossiveis();

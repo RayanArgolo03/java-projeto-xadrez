@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
-import xadrez.exception.XadrezException;
 import xadrez.pecas.Bispo;
 import xadrez.pecas.Cavalo;
 import xadrez.pecas.Peao;
@@ -78,11 +77,13 @@ public class PartidaXadrez {
         return pecas;
     }
 
+    //Colocar peça no xadrez
     private void colocarPecaXadrez(char coluna, int linha, PecaXadrez pecaXadrez) {
         tabuleiro.colocarPeca(pecaXadrez, new PosicaoXadrez(coluna, linha).paraPosicaoGenerica());
         pecasNoTabuleiro.add(pecaXadrez);
     }
 
+    //Verificar quem é o oponente
     private Cor oponente(Cor cor) {
 
         if (cor.equals(Cor.AZUL)) {
@@ -92,6 +93,7 @@ public class PartidaXadrez {
         }
     }
 
+    //Verificar movimentos Rei
     private PecaXadrez rei(Cor cor) {
 
         List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor().equals(cor)).collect(Collectors.toList());
@@ -105,6 +107,7 @@ public class PartidaXadrez {
         throw new IllegalStateException("Erro ao acessar Rei: Não existe o rei da cor " + cor + " no tabuleiro");
     }
 
+    //Verificar se deu check mate
     private boolean testeCheckMate(Cor cor) {
 
         if (!testeCheck(cor)) {
@@ -139,6 +142,7 @@ public class PartidaXadrez {
         return true;
     }
 
+    //Verificar possível check
     private boolean testeCheck(Cor cor) {
 
         Posicao posicaoRei = rei(cor).getPosicaoXadrez().paraPosicaoGenerica();
@@ -192,19 +196,20 @@ public class PartidaXadrez {
         colocarPecaXadrez('h', 7, new Peao(Cor.VERMELHO, this.tabuleiro, this));
     }
 
+    //Verificar posiçao de inicio
     private void posicaoInicioValida(Posicao px1) {
 
         if (!tabuleiro.temPeca(px1)) {
-            throw new XadrezException("Erro ao executar movimento: Sem piece nas coordenadas");
+            throw new XadrezException("Erro ao executar movimento: Coordenada vazia");
 
         }
 
         if (jogadorAtual != ((PecaXadrez) tabuleiro.getPeca(px1)).getCor()) {
-            throw new XadrezException("Erro ao executar movimento: A piece escolhida não é sua!");
+            throw new XadrezException("Erro ao executar movimento: Escolha algo que pertence a ti!");
         }
 
         if (!tabuleiro.getPeca(px1).existeMovimentoPossivel()) {
-            throw new XadrezException("Erro ao executar movimento: Não existe movimento possível para a piece escolhida!");
+            throw new XadrezException("Erro ao executar movimento: Sem movimentos!");
         }
 
     }
@@ -212,17 +217,19 @@ public class PartidaXadrez {
     private void posicaoFinalValida(Posicao px1, Posicao px2) {
 
         if (!getTabuleiro().getPeca(px1).movimentoPossivel(px2)) {
-            throw new XadrezException("Erro ao executar movimento: A piece escolhida não pode se mover para a coordenada de destino!");
+            throw new XadrezException("Erro ao executar movimento: Movimento impossivel!");
         }
 
     }
 
+    //Pular turno
     private void proximoTurno() {
         this.turno++;
 
         jogadorAtual = (jogadorAtual == Cor.AZUL) ? Cor.VERMELHO : Cor.AZUL;
     }
 
+    //Movimentos possiveis na partida
     public boolean[][] movimentosPossiveis(PosicaoXadrez posicaoXadrez) {
 
         Posicao posicao = posicaoXadrez.paraPosicaoGenerica();
@@ -231,6 +238,7 @@ public class PartidaXadrez {
         return tabuleiro.getPeca(posicao).movimentosPossiveis();
     }
 
+    //Mover peça
     private Peca mover(Posicao origem, Posicao destino) {
 
         PecaXadrez p = (PecaXadrez) tabuleiro.removerPeca(origem);
@@ -281,6 +289,7 @@ public class PartidaXadrez {
         return pecaCapturada;
     }
 
+    //Desfazer movimento
     private void desfazerMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
 
         PecaXadrez p = (PecaXadrez) tabuleiro.removerPeca(destino);
@@ -328,6 +337,7 @@ public class PartidaXadrez {
         }
     }
 
+    //Executar movimento
     public PecaXadrez executarMovimento(PosicaoXadrez origem, PosicaoXadrez destino) {
 
         Posicao origemPosicao = origem.paraPosicaoGenerica();
@@ -374,10 +384,11 @@ public class PartidaXadrez {
         return (PecaXadrez) pecaCapturada;
     }
 
+    //Trocar peça promovida por escolhida
     public PecaXadrez trocarPecaPromovida(String tipo) {
 
         if (promocao == null) {
-            throw new IllegalStateException("Erro ao executar jogada promoção: Não há peça para promover!");
+            throw new IllegalStateException("Erro ao executar jogada promotion: Sem possibilidade disso!");
 
         }
         if (!tipo.equalsIgnoreCase("B") && !tipo.equalsIgnoreCase("C") && !tipo.equalsIgnoreCase("T") && !tipo.equalsIgnoreCase("Q")) {
@@ -396,6 +407,7 @@ public class PartidaXadrez {
 
     }
 
+    //Verificar qual peça será gerada
     private PecaXadrez novaPeca(String tipo, Cor cor) {
 
         if (tipo.equals("B")) {

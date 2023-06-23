@@ -11,13 +11,15 @@ public class Cavalo extends PecaXadrez {
         super(cor, tabuleiro);
     }
 
+    //Verifica se pode mover o cavalo
     private boolean podeMover(Posicao posicao) {
 
         PecaXadrez px = (PecaXadrez) tabuleiro.getPeca(posicao);
 
         return px == null || px.getCor() != getCor();
     }
-
+    
+    //Lógica de movimentos do Cabalo
     @Override
     public boolean[][] movimentosPossiveis() {
 

@@ -11,6 +11,7 @@ public class Rainha extends PecaXadrez {
         super(cor, tabuleiro);
     }
 
+    //Lógica de movimentos da Rainha
     @Override
     public boolean[][] movimentosPossiveis() {
 

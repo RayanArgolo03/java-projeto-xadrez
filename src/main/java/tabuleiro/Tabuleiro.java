@@ -1,7 +1,5 @@
 package tabuleiro;
 
-import tabuleiro.exceptions.TabuleiroException;
-
 
 public class Tabuleiro {
 
@@ -13,11 +11,11 @@ public class Tabuleiro {
     public Tabuleiro(int linhas, int colunas) {
         
         if (linhas < 1){
-            throw new TabuleiroException("Erro ao criar tabuleiro: Quantidade de linhas inválida!");
+            throw new TabuleiroException("Erro ao criar tabuleiro: Quantidade de linhas incorreta!");
         }
         
         if (colunas < 1){
-            throw new TabuleiroException("Erro ao criar tabuleiro: Quantidade de colunas inválida!");
+            throw new TabuleiroException("Erro ao criar tabuleiro: Quantidade de colunas incorreta!");
         }
         
         this.pecas = new Peca[linhas][colunas];
@@ -37,7 +35,7 @@ public class Tabuleiro {
     public Peca getPeca(int linha, int coluna) {
 
         if (!posicaoValida(linha, coluna)) {
-            throw new TabuleiroException("Erro ao acessar peça: Posição inválida");
+            throw new TabuleiroException("Erro ao acessar: Origem incorreta!");
         }
 
         return pecas[linha][coluna];
@@ -47,7 +45,7 @@ public class Tabuleiro {
     public Peca getPeca(Posicao posicao) {
 
         if (!posicaoValida(posicao)) {
-            throw new TabuleiroException("Erro ao acessar peça: Posição inválida!");
+            throw new TabuleiroException("Erro ao acessar: Origem incorreta!");
         }
 
         return pecas[posicao.getLinha()][posicao.getColuna()];
@@ -57,7 +55,7 @@ public class Tabuleiro {
     public void colocarPeca(Peca peca, Posicao posicao) {
 
         if (temPeca(posicao)) {
-            throw new TabuleiroException("Erro ao colocar peça na posição " + posicao + ": Posição já ocupada!");
+            throw new TabuleiroException("Erro ao inserir no destino: " + posicao + ": ocupada!");
         }
 
         peca.posicao = posicao;
@@ -86,10 +84,11 @@ public class Tabuleiro {
         return getPeca(posicao) != null;
     }
     
+    //Remove peça
     public Peca removerPeca(Posicao posicao){
         
         if (!posicaoValida(posicao)){
-         throw new TabuleiroException("Erro ao remover peça: Posição inválida!");
+         throw new TabuleiroException("Erro ao remover: Incorreto!");
         }
         
         

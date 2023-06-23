@@ -10,11 +10,13 @@ import xadrez.PosicaoXadrez;
 
 public class UITabuleiro {
 
+    //Método para limpar console git: https://stackoverflow.com/questions/2979383/how-to-clear-the-console-using-java
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    //Cores padrão para output no console do Git
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -33,6 +35,7 @@ public class UITabuleiro {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    //Lê a jogada
     public static PosicaoXadrez lerPosicao(Scanner sc) {
 
         try {
@@ -44,11 +47,12 @@ public class UITabuleiro {
             return new PosicaoXadrez(coluna, linha);
 
         } catch (RuntimeException e) {
-            throw new InputMismatchException("Erro ao ler coordenadas de xadrez: Valores válidos de a1 a h8!");
+            throw new InputMismatchException("Erro ao ler coordenadas de xadrez: Jogue de a1 a h8!");
         }
 
     }
 
+    //Imprime partida, check mate e se o rei está em cheque
     public static void imprimirPartida(PartidaXadrez px, List<PecaXadrez> pecasCapturadas) {
         
         imprimirTabuleiro(px.getPecas());
@@ -72,6 +76,8 @@ public class UITabuleiro {
         }
     }
 
+    
+    //Imprimir design do tabuleiro sem fundo colorido
     public static void imprimirTabuleiro(PecaXadrez[][] pecas) {
 
         System.out.println();
@@ -90,7 +96,8 @@ public class UITabuleiro {
         System.out.print("  a b c d e f g h");
 
     }
-
+    
+    //Imprimir design do tabuleiro com movimentos possíveis
     public static void imprimirTabuleiro(PecaXadrez[][] pecas, boolean[][] movimentosPossiveis) {
 
         System.out.println();
@@ -110,6 +117,7 @@ public class UITabuleiro {
 
     }
 
+    //Imprimir cor das peças
     public static void imprimirPeca(PecaXadrez peca, boolean temFundo) {
 
         //Se tiver peça imprime, senão, imprime "-"
@@ -130,6 +138,7 @@ public class UITabuleiro {
 
     }
     
+    //Imprimir cor das peças capturadas com cor
     private static void imprimirPecasCapturadas(List<PecaXadrez> capturadas) {
 
         List<PecaXadrez> pecasCapturadasAzuis = capturadas.stream()

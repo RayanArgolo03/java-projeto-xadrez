@@ -11,6 +11,7 @@ public class Bispo extends PecaXadrez {
         super(cor, tabuleiro);
     }
 
+    //Lógica de movimentos do Bispo
     @Override
     public boolean[][] movimentosPossiveis() {
 
