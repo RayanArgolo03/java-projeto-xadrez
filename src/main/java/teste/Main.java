@@ -46,6 +46,11 @@ public class Main {
                     System.out.print("Entre com a peça para promoção (T/C/B/Q): ");
                     String tipo = sc.next().toUpperCase();
 
+                    if (!tipo.equals("T") || !tipo.equals("C") || !tipo.equals("B") || !tipo.equals("Q")) {
+                        System.out.print("Valor inválido! Entre com a peça para promoção (T/C/B/Q): ");
+                        tipo = sc.next().toUpperCase();
+                    }
+
                     px.trocarPecaPromovida(tipo);
                 }
             }
